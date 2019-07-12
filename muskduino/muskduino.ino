@@ -32,9 +32,9 @@ void loop()
     int val = analogRead(BRIGHTNESS_PIN);
 	int numLedsToLight = map(val, 0, 1023, 0, NUM_LEDS);
 	
-	FillLEDsFromPaletteColors(startIndex, numLedsToLight);
-	static uint8_t startIndex = 0;
+    static uint8_t startIndex = 0;
     startIndex++; /* motion speed */
+	FillLEDsFromPaletteColors(startIndex, numLedsToLight);
 	
 	FastLED.show();
 	
