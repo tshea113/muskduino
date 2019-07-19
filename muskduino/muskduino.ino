@@ -4,7 +4,6 @@
 #define BRIGHTNESS_PIN	2
 #define LED_PIN     	9
 #define NUM_LEDS   		24
-#define BRIGHTNESS  	200
 #define LED_TYPE    	WS2812
 #define COLOR_ORDER 	GRB
 
@@ -30,8 +29,10 @@ void setup() {
 void loop()
 {
     int val = analogRead(BRIGHTNESS_PIN);
-	int numLedsToLight = map(val, 0, 1023, 0, NUM_LEDS);
+	int brightness = map(val, 0, 1023, 0, NUM_LEDS);
 	
+    FastLEDs.setBrightness(numLedsToLight);
+
     static uint8_t startIndex = 0;
     startIndex++; /* motion speed */
 	FillLEDsFromPaletteColors(startIndex, numLedsToLight);
@@ -44,7 +45,7 @@ void loop()
 void FillLEDsFromPaletteColors(uint8_t colorIndex, int numLedsToLight)
 {
     for (int i = 0; i < numLedsToLight; i++) {
-        leds[i] = ColorFromPalette(currentPalette, colorIndex, BRIGHTNESS, LINEARBLEND);
+        leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, LINEARBLEND);
         colorIndex += 3;
     }
 }
