@@ -30,7 +30,7 @@ void setup() {
     random16_add_entropy(analogRead(A0));
 
     pinMode(MODE_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(interruptPin), changeMode, FALLING);
+    attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
 }
 
 void loop()
