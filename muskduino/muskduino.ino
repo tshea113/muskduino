@@ -31,6 +31,8 @@ void setup() {
 
     random16_add_entropy(analogRead(A0));
 
+    SetupPaletteFire();
+
     pinMode(MODE_PIN, INPUT_PULLUP);
     // attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
 }
