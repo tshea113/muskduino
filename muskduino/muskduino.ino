@@ -1,16 +1,16 @@
 // FastLED - Version: Latest 
 #include <FastLED.h>
 
-#define BRIGHTNESS_PIN	2
-#define LED_PIN     	9
+#define BRIGHTNESS_PIN  2
+#define LED_PIN         9
 #define MODE_PIN        3
 
-#define NUM_LEDS   		24
-#define LED_TYPE    	WS2812
-#define COLOR_ORDER 	GRB
+#define NUM_LEDS        24
+#define LED_TYPE        WS2812
+#define COLOR_ORDER     GRB
 
-#define RED 			0xff0000
-#define YELLOW			0xe1cf04
+#define RED             0xff0000
+#define YELLOW          0xe1cf04
 
 #define UPDATES_PER_SECOND (20)
 
@@ -83,7 +83,7 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 void SetupPalette()
 {
     for (int i = 0; i < 16; i++) {
-        currentPalette[i] = colors[random8() % colors.size()];
+        currentPalette[i] = colors[random8() % 3];
     }
 }
 
