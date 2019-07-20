@@ -16,6 +16,9 @@
 
 #define UPDATES_PER_SECOND (20)
 
+extern CRGBPalette16 myRedWhiteBluePalette;
+extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
+
 CRGB leds[NUM_LEDS];
 
 CRGBPalette16 currentPalette;
@@ -115,7 +118,7 @@ void SetupPaletteFire()
 
 void SetupPaletteMurica()
 {
-    currentPalette[] = myRedWhiteBluePalette_p;
+    currentPalette = myRedWhiteBluePalette_p;
 }
 
 // **************************************************************************************
