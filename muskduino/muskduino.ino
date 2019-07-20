@@ -72,7 +72,7 @@ void loop()
         
         FastLED.show();
 	
-        FastLED.delay(1000 / UPDATES_PER_SECOND);
+        FastLED.delay(800 / UPDATES_PER_SECOND);
     }	
 }
 
@@ -94,12 +94,19 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness, bool blend)
 
 void changeMode()
 {
-    if (mode > 1)
+    static unsigned long last_interrupt_time = 0;
+    unsigned long interrupt_time = millis();
+    // If interrupts come faster than 200ms, assume it's a bounce and ignore
+    if (interrupt_time - last_interrupt_time > 200)
     {
-        mode = 0;
-    } else 
-    {
-        mode++;
+        if (mode > 1)
+        {
+            mode = 0;
+        } else 
+        {
+            mode++;
+        }
+    last_interrupt_time = interrupt_time;
     }
 }
 
