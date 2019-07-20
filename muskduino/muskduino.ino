@@ -24,6 +24,7 @@ CRGB leds[NUM_LEDS];
 CRGBPalette16 currentPalette;
 
 volatile uint8_t mode = 0;
+volatile static unsigned long last_interrupt_time = 0;
 
 void setup() {
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -68,7 +69,7 @@ void loop()
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
-	    FillLEDsFromPaletteColors(startIndex, brightness, false);
+	    FillLEDsFromPaletteColors(startIndex, brightness, true);
         
         FastLED.show();
 	
@@ -91,11 +92,9 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness, bool blend)
     }
 }
 
-
 void changeMode()
 {
-    static unsigned long last_interrupt_time = 0;
-    unsigned long interrupt_time = millis();
+    volatile unsigned long interrupt_time = millis();
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
