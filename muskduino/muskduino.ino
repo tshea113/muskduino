@@ -34,6 +34,8 @@ void setup() {
 
     pinMode(MODE_PIN, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
+
+    delay(500);
 }
 
 void loop()
