@@ -19,7 +19,7 @@ CRGB colors[] = { CRGB(RED), CRGB(YELLOW), CRGB::Black };
 
 CRGBPalette16 currentPalette;
 
-uint8_t mode = 0;
+volatile uint8_t mode = 0;
 
 void setup() {
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -30,6 +30,7 @@ void setup() {
     random16_add_entropy(analogRead(A0));
 
     pinMode(MODE_PIN, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(interruptPin), changeMode, FALLING);
 }
 
 void loop()
@@ -38,20 +39,6 @@ void loop()
 	int brightness = map(val, 0, 1023, 25, 200);
 	
     FastLED.setBrightness(brightness);
-
-    if (digitalRead(MODE_PIN) == LOW)
-    {
-        delay(50);
-        if (digitalRead(MODE_PIN) == HIGH)
-        {
-            if (mode > 1)
-            {
-                mode = 0;
-            } else {
-                mode++;
-            }
-        }
-    }
 
     if (mode == 0)
     {
@@ -87,6 +74,17 @@ void SetupPalette()
 {
     for (int i = 0; i < 16; i++) {
         currentPalette[i] = colors[random8() % 3];
+    }
+}
+
+void changeMode()
+{
+    if (mode > 1)
+    {
+        mode = 0;
+    } else 
+    {
+        mode++;
     }
 }
 
