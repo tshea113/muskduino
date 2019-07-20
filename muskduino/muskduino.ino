@@ -115,7 +115,7 @@ void SetupPaletteFire()
 
 void SetupPaletteMurica()
 {
-    currentPalette[i] = myRedWhiteBluePalette_p;
+    currentPalette[] = myRedWhiteBluePalette_p;
 }
 
 // **************************************************************************************
