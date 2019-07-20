@@ -1,22 +1,21 @@
 // FastLED - Version: Latest 
 #include <FastLED.h>
 
+// Pins
 #define BRIGHTNESS_PIN  2
 #define LED_PIN         9
 #define MODE_PIN        3
 
+// Colors
+#define RED             0xff0000
+#define YELLOW          0xe1cf04
+
+// Other
 #define NUM_LEDS        24
 #define LED_TYPE        WS2812
 #define COLOR_ORDER     GRB
-
-#define RED             0xff0000
-#define YELLOW          0xe1cf04
-#define BLUE            0x0000ff
-#define WHITE           0xffffff
-
 #define UPDATES_PER_SECOND (20)
 
-extern CRGBPalette16 myRedWhiteBluePalette;
 extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
 CRGB leds[NUM_LEDS];
@@ -73,7 +72,7 @@ void loop()
     FastLED.delay(1000 / UPDATES_PER_SECOND);
 }
 
-void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness, bool blend)
+void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 {
     for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, LINEARBLEND);
