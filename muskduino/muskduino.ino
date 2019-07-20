@@ -50,17 +50,12 @@ void loop()
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
 	    FillLEDsFromPaletteColors(startIndex, brightness, true);
-        
-        FastLED.show();
-	
-        FastLED.delay(1000 / UPDATES_PER_SECOND);
     }
     else if (mode == 1)
     {
         for (int i = 0; i < NUM_LEDS; i++)
         {
             leds[i] = CRGB::White;
-            FastLED.show();
         }
     }
     else if (mode == 2)
@@ -70,11 +65,10 @@ void loop()
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
 	    FillLEDsFromPaletteColors(startIndex, brightness, true);
-        
-        FastLED.show();
-	
-        FastLED.delay(800 / UPDATES_PER_SECOND);
-    }	
+    }
+
+    FastLED.show();
+    FastLED.delay(1000 / UPDATES_PER_SECOND);
 }
 
 void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness, bool blend)
