@@ -58,18 +58,21 @@ void loop()
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
 	    FillLEDsFromPaletteColors(startIndex, brightness);
+        
+        FastLED.show();
+	
+        FastLED.delay(1000 / UPDATES_PER_SECOND);
     }
     else if (mode == 1)
     {
         for (int i = 0; i < NUM_LEDS; i++)
         {
             leds[i] = CRGB::White;
+            FastLED.show();
         }
     }
 
-	FastLED.show();
 	
-    FastLED.delay(1000 / UPDATES_PER_SECOND);
 }
 
 void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
