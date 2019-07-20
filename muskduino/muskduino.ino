@@ -51,7 +51,7 @@ void loop()
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
-	    FillLEDsFromPaletteColors(startIndex, brightness, true);
+	    FillLEDsFromPaletteColors(startIndex, brightness);
     }
     else if (mode == 1)
     {
@@ -66,7 +66,7 @@ void loop()
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
-	    FillLEDsFromPaletteColors(startIndex, brightness, true);
+	    FillLEDsFromPaletteColors(startIndex, brightness);
     }
 
     FastLED.show();
@@ -76,14 +76,7 @@ void loop()
 void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness, bool blend)
 {
     for (int i = 0; i < NUM_LEDS; i++) {
-        if (blend)
-        {
-            leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, LINEARBLEND);
-        } else
-        {
-            leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, NOBLEND);
-        }
-        
+        leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, LINEARBLEND);
         colorIndex += 3;
     }
 }
