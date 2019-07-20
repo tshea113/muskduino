@@ -99,7 +99,8 @@ void changeMode()
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        if (++mode > 2)
+        mode++;
+        if (mode > 2)
         {
             mode = 0;
         }
