@@ -68,7 +68,7 @@ void loop()
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
-	    FillLEDsFromPaletteColors(startIndex, brightness, true);
+	    FillLEDsFromPaletteColors(startIndex, brightness, false);
         
         FastLED.show();
 	
@@ -99,20 +99,17 @@ void changeMode()
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        if (mode > 1)
+        if (++mode > 2)
         {
             mode = 0;
-        } else 
-        {
-            mode++;
         }
     last_interrupt_time = interrupt_time;
     }
 }
 
-// **************************************************************************************
+//**************************************************************************************
 // Palette Setups
-// **************************************************************************************
+//**************************************************************************************
 
 void SetupPaletteFire()
 {
@@ -128,30 +125,29 @@ void SetupPaletteMurica()
     currentPalette = myRedWhiteBluePalette_p;
 }
 
-// **************************************************************************************
+//**************************************************************************************
 // Palettes
-// **************************************************************************************
+//**************************************************************************************
 
 const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
 {
+    CRGB::Red,
+    CRGB::Gray,     // 'white' is too bright compared to red and blue
+    CRGB::Blue,
     CRGB::Black,
-    CRGB::Red,
-    CRGB::Red,
-    CRGB::Red,
     
-    CRGB::Black,
+    CRGB::Red,
+    CRGB::Gray,
+    CRGB::Blue,
     CRGB::Black,
 
-    CRGB::Gray,     // 'white' is too bright compared to red and blue
+    CRGB::Red,
     CRGB::Gray,
-    CRGB::Gray,
-    CRGB::Gray,
-    
-    CRGB::Black,
-    CRGB::Black,
-    
     CRGB::Blue,
-    CRGB::Blue,
+    CRGB::Black,
+
+    CRGB::Red,
+    CRGB::Gray,
     CRGB::Blue,
     CRGB::Black
 };
