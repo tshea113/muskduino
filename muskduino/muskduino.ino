@@ -31,20 +31,20 @@ void loop()
     int val = analogRead(BRIGHTNESS_PIN);
 	int brightness = map(val, 0, 1023, 0, NUM_LEDS);
 	
-    FastLEDs.setBrightness(numLedsToLight);
+    FastLEDs.setBrightness(brightness);
 
     static uint8_t startIndex = 0;
     startIndex++; /* motion speed */
-	FillLEDsFromPaletteColors(startIndex, numLedsToLight);
+	FillLEDsFromPaletteColors(startIndex, brightness);
 	
 	FastLED.show();
 	
     FastLED.delay(1000 / UPDATES_PER_SECOND);
 }
 
-void FillLEDsFromPaletteColors(uint8_t colorIndex, int numLedsToLight)
+void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 {
-    for (int i = 0; i < numLedsToLight; i++) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = ColorFromPalette(currentPalette, colorIndex, brightness, LINEARBLEND);
         colorIndex += 3;
     }
