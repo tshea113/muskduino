@@ -19,7 +19,7 @@ CRGBPalette16 currentPalette;
 
 void setup() {
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-    FastLED.setBrightness(BRIGHTNESS);
+    FastLED.setBrightness(200);
     
     SetupPalette();
 
@@ -29,9 +29,9 @@ void setup() {
 void loop()
 {
     int val = analogRead(BRIGHTNESS_PIN);
-	int brightness = map(val, 0, 1023, 0, NUM_LEDS);
+	int brightness = map(val, 0, 1023, 50, 200);
 	
-    FastLEDs.setBrightness(brightness);
+    FastLED.setBrightness(brightness);
 
     static uint8_t startIndex = 0;
     startIndex++; /* motion speed */
