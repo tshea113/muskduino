@@ -32,9 +32,7 @@ void setup() {
     random16_add_entropy(analogRead(A0));
 
     pinMode(MODE_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
-
-    delay(500);
+    // attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
 }
 
 void loop()
@@ -52,21 +50,21 @@ void loop()
         startIndex++; /* motion speed */
 	    FillLEDsFromPaletteColors(startIndex, brightness);
     }
-    else if (mode == 1)
-    {
-        for (int i = 0; i < NUM_LEDS; i++)
-        {
-            leds[i] = CRGB::White;
-        }
-    }
-    else if (mode == 2)
-    {
-        SetupPaletteMurica();
+    // else if (mode == 1)
+    // {
+    //     for (int i = 0; i < NUM_LEDS; i++)
+    //     {
+    //         leds[i] = CRGB::White;
+    //     }
+    // }
+    // else if (mode == 2)
+    // {
+    //     SetupPaletteMurica();
 
-        static uint8_t startIndex = 0;
-        startIndex++; /* motion speed */
-	    FillLEDsFromPaletteColors(startIndex, brightness);
-    }
+    //     static uint8_t startIndex = 0;
+    //     startIndex++; /* motion speed */
+	//     FillLEDsFromPaletteColors(startIndex, brightness);
+    // }
 
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
@@ -80,14 +78,17 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
     }
 }
 
+
+//**************************************************************************************
+// ISR
+//**************************************************************************************
 void changeMode()
 {
     volatile unsigned long interrupt_time = millis();
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        mode++;
-        if (mode > 2)
+        if (++mode > 2)
         {
             mode = 0;
         }
