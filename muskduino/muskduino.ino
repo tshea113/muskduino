@@ -46,11 +46,11 @@ void loop()
 
     if (mode == 0)
     {
-        // SetupPaletteFire();
+        SetupPaletteFire();
 
-        // static uint8_t startIndex = 0;
-        // startIndex++; /* motion speed */
-	    // FillLEDsFromPaletteColors(startIndex, brightness);
+        static uint8_t startIndex = 0;
+        startIndex++; /* motion speed */
+	    FillLEDsFromPaletteColors(startIndex, brightness);
     }
     else if (mode == 1)
     {
@@ -113,7 +113,11 @@ void SetupPaletteFire()
 
 void SetupPaletteMurica()
 {
-    currentPalette = myRedWhiteBluePalette_p;
+    CRGB murica[] = { CRGB::Red, CRGB::Gray, CRGB::Blue };
+
+    for (int i = 0; i < 16; i++) {
+        currentPalette[i] = murica[i % 3];
+    }
 }
 
 //**************************************************************************************
