@@ -45,7 +45,10 @@ void loop()
 
     if (mode == 0)
     {
-        SetupPaletteFire();
+        for (int i = 0; i < 16; i++)
+        {
+            currentPalette[i] = fire[i % 3];
+        }
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
@@ -61,6 +64,14 @@ void loop()
     else if (mode == 2)
     {
         currentPalette = myRedWhiteBluePalette_p;
+
+        static uint8_t startIndex = 0;
+        startIndex++; /* motion speed */
+	    FillLEDsFromPaletteColors(startIndex, brightness);
+    }
+    else if (mode == 3)
+    {
+        fill_rainbow(currentPalette, 16, 0);
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
@@ -82,13 +93,6 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 //**************************************************************************************
 // Palette Setups
 //**************************************************************************************
-void SetupPaletteFire()
-{
-    for (int i = 0; i < 16; i++)
-    {
-        currentPalette[i] = fire[i % 3];
-    }
-}
 
 //**************************************************************************************
 // ISR
@@ -99,7 +103,7 @@ void changeMode()
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        if (++mode > 2) mode = 0;
+        if (++mode > 3) mode = 0;
         last_interrupt_time = interrupt_time;
     }
 }
