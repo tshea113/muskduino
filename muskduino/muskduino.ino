@@ -23,12 +23,12 @@ CRGB leds[NUM_LEDS];
 
 CRGBPalette16 currentPalette;
 
+int val, brightness;
+
 volatile uint8_t mode = 0;
 volatile static unsigned long last_interrupt_time = 0;
 
-void setup() {
-    int val, brightness;
-    
+void setup() {   
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(200);
 
