@@ -34,7 +34,7 @@ void setup() {
     SetupPaletteFire();
 
     pinMode(MODE_PIN, INPUT_PULLUP);
-    // attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
+    attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
 }
 
 void loop()
