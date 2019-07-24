@@ -15,6 +15,7 @@
 #define LED_TYPE        WS2812
 #define COLOR_ORDER     GRB
 #define UPDATES_PER_SECOND (20)
+#define NUM_MODES       4
 
 const CRGB fire[] = { CRGB(RED), CRGB(YELLOW), CRGB::Black };
 const extern TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
@@ -73,6 +74,10 @@ void loop()
     {
         rainbow_march(200, 10);
     }
+    else if (mode == 4)
+    {
+        fadein();
+    }
 
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
@@ -100,6 +105,19 @@ void rainbow_march(uint8_t thisdelay, uint8_t deltahue)       // The fill_rainbo
 
 } // rainbow_march()
 
+void fadein() {
+
+  random16_set_seed(535);                                                           // The randomizer needs to be re-set each time through the loop in order for the 'random' numbers to be the same each time through.
+
+  for (int i = 0; i<NUM_LEDS; i++) {
+    uint8_t fader = sin8(millis()/random8(10,20));                                  // The random number for each 'i' will be the same every time.
+    leds[i] = ColorFromPalette(currentPalette, i*20, fader, LINEARBLEND);           // Now, let's run it through the palette lookup.
+  }
+
+  random16_set_seed(millis());                                                      // Re-randomizing the random number seed for other routines.
+
+} // fadein()
+
 //**************************************************************************************
 // ISR
 //**************************************************************************************
@@ -109,7 +127,7 @@ void changeMode()
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        if (++mode > 3) mode = 0;
+        if (++mode > NUM_MODES) mode = 0;
         last_interrupt_time = interrupt_time;
     }
 }
