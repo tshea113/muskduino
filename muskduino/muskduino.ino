@@ -83,23 +83,19 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 //**************************************************************************************
 // Palette Setups
 //**************************************************************************************
-
 void SetupPaletteFire()
 {
     CRGB fire[] = { CRGB(RED), CRGB(YELLOW), CRGB::Black };
 
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++)
+    {
         currentPalette[i] = fire[i % 3];
     }
 }
 
 void SetupPaletteMurica()
 {
-    CRGB murica[] = { CRGB::Red, CRGB::Gray, CRGB::Blue };
-
-    for (int i = 0; i < 16; i++) {
-        currentPalette[i] = murica[i % 3];
-    }
+    currentPalette = myRedWhiteBluePalette_p;
 }
 
 //**************************************************************************************
@@ -118,3 +114,30 @@ void changeMode()
     last_interrupt_time = interrupt_time;
     }
 }
+
+//**************************************************************************************
+// Palettes
+//**************************************************************************************
+
+const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
+{
+    CRGB::Red,
+    CRGB::Gray,     // 'white' is too bright compared to red and blue
+    CRGB::Blue,
+    CRGB::Black,
+    
+    CRGB::Red,
+    CRGB::Gray,
+    CRGB::Blue,
+    CRGB::Black,
+
+    CRGB::Red,
+    CRGB::Gray,
+    CRGB::Blue,
+    CRGB::Black,
+
+    CRGB::Red,
+    CRGB::Gray,
+    CRGB::Blue,
+    CRGB::Black
+};
