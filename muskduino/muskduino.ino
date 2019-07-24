@@ -46,27 +46,27 @@ void loop()
 
     if (mode == 0)
     {
-        SetupPaletteFire();
+        // SetupPaletteFire();
+
+        // static uint8_t startIndex = 0;
+        // startIndex++; /* motion speed */
+	    // FillLEDsFromPaletteColors(startIndex, brightness);
+    }
+    else if (mode == 1)
+    {
+        for (int i = 0; i < NUM_LEDS; i++)
+        {
+            leds[i] = CRGB::White;
+        }
+    }
+    else if (mode == 2)
+    {
+        SetupPaletteMurica();
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
 	    FillLEDsFromPaletteColors(startIndex, brightness);
     }
-    // else if (mode == 1)
-    // {
-    //     for (int i = 0; i < NUM_LEDS; i++)
-    //     {
-    //         leds[i] = CRGB::White;
-    //     }
-    // }
-    // else if (mode == 2)
-    // {
-    //     SetupPaletteMurica();
-
-    //     static uint8_t startIndex = 0;
-    //     startIndex++; /* motion speed */
-	//     FillLEDsFromPaletteColors(startIndex, brightness);
-    // }
 
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
