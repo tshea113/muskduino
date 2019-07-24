@@ -16,7 +16,8 @@
 #define COLOR_ORDER     GRB
 #define UPDATES_PER_SECOND (20)
 
-extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
+const CRGB fire[] = { CRGB(RED), CRGB(YELLOW), CRGB::Black };
+const extern TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
 CRGB leds[NUM_LEDS];
 
@@ -26,12 +27,10 @@ volatile uint8_t mode = 0;
 volatile static unsigned long last_interrupt_time = 0;
 
 void setup() {
+    int val, brightness;
+    
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(200);
-
-    random16_add_entropy(analogRead(A0));
-
-    SetupPaletteFire();
 
     pinMode(MODE_PIN, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(MODE_PIN), changeMode, FALLING);
@@ -39,8 +38,8 @@ void setup() {
 
 void loop()
 {
-    int val = analogRead(BRIGHTNESS_PIN);
-	int brightness = map(val, 0, 1023, 25, 200);
+    val = analogRead(BRIGHTNESS_PIN);
+	brightness = map(val, 0, 1023, 25, 200);
 	
     FastLED.setBrightness(brightness);
 
@@ -61,7 +60,7 @@ void loop()
     }
     else if (mode == 2)
     {
-        SetupPaletteMurica();
+        currentPalette = myRedWhiteBluePalette_p;
 
         static uint8_t startIndex = 0;
         startIndex++; /* motion speed */
@@ -85,17 +84,10 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex, int brightness)
 //**************************************************************************************
 void SetupPaletteFire()
 {
-    CRGB fire[] = { CRGB(RED), CRGB(YELLOW), CRGB::Black };
-
     for (int i = 0; i < 16; i++)
     {
         currentPalette[i] = fire[i % 3];
     }
-}
-
-void SetupPaletteMurica()
-{
-    currentPalette = myRedWhiteBluePalette_p;
 }
 
 //**************************************************************************************
@@ -107,18 +99,14 @@ void changeMode()
     // If interrupts come faster than 200ms, assume it's a bounce and ignore
     if (interrupt_time - last_interrupt_time > 200)
     {
-        if (++mode > 2)
-        {
-            mode = 0;
-        }
-    last_interrupt_time = interrupt_time;
+        if (++mode > 2) mode = 0;
+        last_interrupt_time = interrupt_time;
     }
 }
 
 //**************************************************************************************
 // Palettes
 //**************************************************************************************
-
 const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
 {
     CRGB::Red,
